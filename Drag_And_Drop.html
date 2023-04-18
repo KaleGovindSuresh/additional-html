@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        body {
+            background-color: blueviolet;
+        }
+
+        .imgbox {
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm2fmKVxObx6S1S87K3_FwX35IIwAPqgGs0A&usqp=CAU");
+            background-repeat: no-repeat;
+            position: relative;
+            height: 245px;
+            width: 250px;
+            cursor: pointer;
+        }
+
+        .whitebox {
+            display: inline-block;
+            height: 245px;
+            width: 250px;
+            margin: 10px;
+            background-color: aliceblue;
+            border: 3px solid red;
+        }
+
+        .hold {
+            border: 4px solid magenta;
+        }
+
+        /* .hide {
+            display: none;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="whitebox">
+        <div class="imgbox" draggable="true"></div>
+    </div>
+    <div class="whitebox"></div>
+    <div class="whitebox"></div>
+    <div class="whitebox"></div>
+
+
+
+    <script>
+        console.log('this is the drag and drop from javascript');
+
+        const imgbox = document.querySelector('.imgbox');
+        const whiteboxes = document.getElementsByClassName('whitebox');
+
+        //event listners for draggable elemnt imgbox 
+        imgbox.addEventListener('dragstart', (e) => {
+            console.log('Dragstart has been triggered');
+            e.target.className += ' hold';
+            setTimeout(() => {
+                e.target.className = 'hide';
+            }, 0);
+        });
+        imgbox.addEventListener('dragend', (e) => {
+            console.log('Dragend has been triggered');
+            e.target.className = 'imgbox';
+        });
+
+        for (whitebox of whiteboxes) {
+            whitebox.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                console.log('DragOver has been triggered');
+            });
+            whitebox.addEventListener('dragcenter', () => {
+                console.log('DragCenter has been triggered');
+            });
+            whitebox.addEventListener('dragleave', () => {
+                console.log('Dragleave has been triggered');
+            });
+            whitebox.addEventListener('drop', (e) => {
+                console.log('Drop has been triggered');
+                e.target.append(imgbox);
+            });
+
+        }
+    </script>
+</body>
+
+</html>
